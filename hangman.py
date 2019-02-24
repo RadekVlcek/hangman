@@ -2,21 +2,15 @@
 
 import os
 import time
+import random
 
 def clear():
-    if os.name is 'nt':
+    if os.name == 'nt':
         os.system('cls')
     else:
         os.system('clear')
 
-def printResults():
-    print(f'Match: {m}/{len(guess)} \t {hman}')
-    output = ''
-    for x in w:
-        output += f'{x} '
-    return output
-
-def animation():
+def final_animation():
     x, d, d2 = 0, 1, 1
     opt = [1, 7]
     output = ''
@@ -31,28 +25,63 @@ def animation():
 
         print(output)
         output = ''
-        time.sleep(.200)
-        clear()    
 
-# Enter a word to guess
-while True:
-    guess = input('Enter a word to guess: ').lower()
-    # For now only 1 word allowed
-    if guess.isalpha() and len(guess) > 1:
+        time.sleep(.1)
         clear()
+
+def printResults():
+    print(f'Match: {m}/{len(guess_string)} \t {hman}')
+    output = ''
+    for x in w:
+        output += f'{x} '
+    return output
+
+
+def m1():
+    words = ["helicopter", "netherlands", "easteregg", "skyscraper", "igor", "fero", "speaker",
+                "bottle", "birthday", "sofa", "dryer", "facepalm", "freestyle", "weed", "smartphone",
+                "dumbguy", "rotterdam", "bratislava", "debil", "kohut", "kokotleba"]
+    print(len(words))
+    return words[random.randint(0, len(words))]
+
+def m2():
+    # Enter a word to guess
+    while True:
+        guess = input('Enter a word to guess: ').lower()
+        # For now only 1 word allowed
+        if guess.isalpha() and len(guess) > 1:
+            clear()
+            return guess
+        else:
+            print('Enter one word, not a letter or a number!')
+
+# Intro
+guess_string = ''
+
+while True:
+    print('Choose game mode.')
+    game_mode = int(input('1) vs computer\n2) vs friend\n... '))
+    
+    if game_mode == 1:
+        guess_string = m1()
+        break
+    elif game_mode == 2:
+        guess_string = m2()
         break
     else:
-        print('Enter one word, not a letter or a number!')
+        print('Invalid input.')
 
-temp_m, m, f = 0, 0, 0
-w = list(guess)
-w2 = []
+    
+        
+
+temp_m, m, f = 0, 0, 0 
+w, w2 = list(guess_string), []
 hmanlist = ['H', 'A', 'N', 'G', 'M', 'A', 'N']
 hman = ''
 
 # Fill in w2 dictionary with letters and indexes
 for i in range(len(w)):
-    if w[i] is not ' ':
+    if w[i] != ' ':
         w2.append({ "index": i, "letter": w[i] })
         w[i] = '_'
     else:
@@ -63,18 +92,18 @@ print(printResults())
 while True:
     i = input('Guess a letter: ')
 
-    if i.isalpha() and len(i) is 1:
+    if i.isalpha() and len(i) == 1:
         for x in range(len(w2)):
-            if i is w2[x]['letter']:
-                if w[w2[x]['index']] is not i:
+            if i == w2[x]['letter']:
+                if w[w2[x]['index']] != i:
                     w[w2[x]['index']] = i
                     temp_m += 1
 
         # Guessed wrong
-        if temp_m is m:
+        if temp_m == m:
             if f >= len(hmanlist)-1:
-                animation()
-                input()
+                final_animation()
+                # end
             else:
                 hman += hmanlist[f]
                 f += 1
