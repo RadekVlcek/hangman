@@ -36,15 +36,14 @@ def printResults():
         output += f'{x} '
     return output
 
-
-def m1():
+def vs_computer():
     words = ["helicopter", "netherlands", "easteregg", "skyscraper", "igor", "fero", "speaker",
                 "bottle", "birthday", "sofa", "dryer", "facepalm", "freestyle", "weed", "smartphone",
                 "dumbguy", "rotterdam", "bratislava", "debil", "kohut", "kokotleba"]
-    print(len(words))
+    clear()
     return words[random.randint(0, len(words))]
 
-def m2():
+def vs_friend():
     # Enter a word to guess
     while True:
         guess = input('Enter a word to guess: ').lower()
@@ -63,16 +62,13 @@ while True:
     game_mode = int(input('1) vs computer\n2) vs friend\n... '))
     
     if game_mode == 1:
-        guess_string = m1()
+        guess_string = vs_computer()
         break
     elif game_mode == 2:
-        guess_string = m2()
+        guess_string = vs_friend()
         break
     else:
         print('Invalid input.')
-
-    
-        
 
 temp_m, m, f = 0, 0, 0 
 w, w2 = list(guess_string), []
